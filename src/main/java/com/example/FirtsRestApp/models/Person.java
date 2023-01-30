@@ -1,6 +1,10 @@
 package com.example.FirtsRestApp.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Person")
@@ -12,9 +16,17 @@ public class Person {
     private int id;
 
     @Column(name = "name")
-    private String username;
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
+    private String name;
+
+    @Column(name = "age")
+    @Min(value = 0, message = "Age should be greater than 0")
+    private int age;
 
     @Column(name = "email")
+    @Email
+    @NotEmpty(message = "Email should not be empty")
     private String email;
 
     public Person() {
@@ -22,7 +34,7 @@ public class Person {
 
     public Person(int id, String username) {
         this.id = id;
-        this.username = username;
+        this.name = username;
     }
 
     public int getId() {
@@ -33,12 +45,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String username) {
+        this.name = username;
     }
 
     public String getEmail() {
@@ -49,11 +61,20 @@ public class Person {
         this.email = email;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", age='" + age + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
